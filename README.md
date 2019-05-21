@@ -16,7 +16,9 @@ This project is built with Vagrant on a virtual private server using a Quorum ne
 
 In your server, open a terminal and clone the 7Nodes example:
 
-`git clone https://github.com/jpmorganchase/quorum-examples`
+```
+git clone https://github.com/jpmorganchase/quorum-examples
+```
 
 After clonning process is completed, enter the directory and start Vagrant deployment:
 
@@ -27,4 +29,6 @@ vagrant up
 
 After vagrant up successfully completes, access the newly minted virtual machine:
 
-`vagrant ssh`
+```
+vagrant ssh
+```
