@@ -32,3 +32,26 @@ After vagrant up successfully completes, access the newly minted virtual machine
 ```
 vagrant ssh
 ```
+
+You will see a change in command line, run below code:
+
+```
+vagrant@ubuntu-xenial:~$ cd quorum-examples/7nodes/
+```
+
+Now create seven Quorum nodes to simulate a real Quorum deployment and start up those nodes. Before that, add `--rpccorsdomain http://localhost:80` to raft-start.sh:77 to access nodes from a UI.
+
+```
+./raft-init.sh
+./raft-start.sh constellation
+```
+
+Our environment is ready. Next thing is to deploy our Truffle application and UI.
+
+## UI
+
+Open up a new terminal and run this code in your workspace:
+
+```
+git clone https://github.com/yenerunver/quorum-election
+```
