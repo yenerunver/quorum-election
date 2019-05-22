@@ -61,8 +61,8 @@ pragma solidity 0.5.0; contract TurkishElections {
     }
     
     // Definition of getTotalVotes() function to show total results
-    function getTotalVotes(uint _option) view public returns (uint total) {
-        return totals[_option];
+    function getTotalVotes() view public returns (uint, uint, uint, uint, uint, uint) {
+        return (totals[1], totals[2], totals[3], totals[4], totals[5], totals[6]);
     }
          
     // Definition of validateOption() function to validate option
