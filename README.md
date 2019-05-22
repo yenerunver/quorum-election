@@ -46,9 +46,9 @@ Now create seven Quorum nodes to simulate a real Quorum deployment and start up 
 ./raft-start.sh constellation
 ```
 
-Our environment is ready. Next thing is to deploy our Truffle application and UI.
+Our environment is ready. Next thing is to deploy our Truffle application.
 
-## UI
+## Truffle
 
 Open up a new terminal and run this code in your workspace:
 
@@ -62,4 +62,32 @@ Smart Contract and Truffle configuration files are already included in this proj
 truffle migrate
 ```
 
-The project is ready.
+The project is ready. Next step is to test the functions.
+
+To get current election results for our 6 options (indexes are starting from 0):
+
+```
+truffle exec getTotalVotes.js --network development
+```
+
+If you do not specify a network, the default is `development`. You can see the results from voters' eye by setting network option as `voterA`, `voterB`, `voterC`, `voterD` or `voterE`.
+
+To check if your voter has voted, run:
+
+```
+truffle exec isVoted.js --network voterC
+```
+
+To get current network's account address:
+
+```
+truffle exec getAddress.js --network voterE
+```
+
+To vote for an option:
+
+```
+truffle exec voteFor5.js --network voterB
+```
+
+Note that, after voters have submitted their votes, voters can only see their own votes. Only in `development` network, the total result can be seen.
