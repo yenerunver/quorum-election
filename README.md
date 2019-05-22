@@ -55,3 +55,11 @@ Open up a new terminal and run this code in your workspace:
 ```
 git clone https://github.com/yenerunver/quorum-election
 ```
+
+Smart Contract and Truffle configuration files are already included in this project. Just need to migrate:
+
+```
+truffle migrate
+```
+
+The project is ready.
