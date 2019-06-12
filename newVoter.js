@@ -9,6 +9,7 @@ module.exports = function(done) {
 	Election.deployed().then(function(instance) {
 		return instance.newVoter(account.address);
 	}).then(function(result){
+		console.log("New account is created: " + account.address);
 		console.log(result);
 		done();
 	}).catch(function(e) {

@@ -1,17 +1,23 @@
+if(!process.argv[4].length)
+	return "You have to enter an account!";
+
+if(!process.argv[5].length)
+	return "You have to enter a candidate value!";
+
 var Election = artifacts.require("TurkishElections");
-let account = Election.defaults().from;
+let account = process.argv[4];
 let regulator_key = "BULeR8JyUWhiuuCMU/HLA0Q5pzkYT+cHII3ZKBey3Bo=";
 
 module.exports = function(done) {
 	Election.deployed().then(function(instance) {
-		return instance.vote(process.argv[4], {privateFor: [regulator_key]});
+		return instance.vote(process.argv[4], process.argv[5], {privateFor: [regulator_key]});
 	}).then(function(result){
 		console.log("Transaction:", result.tx);
 		console.log("Block Number:", result.receipt.blockNumber);
-		console.log("Voted for "+process.argv[4]+"!");
+		console.log("Account " + process.argv[5] + " voted for " + process.argv[5] + "!");
 		done();
 	}).catch(function(e) {
-		console.log("You have no voting rights!");
+		console.log("The account has no voting rights!");
 		done();
 	});
 };

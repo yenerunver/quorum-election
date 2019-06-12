@@ -66,18 +66,16 @@ truffle migrate
 
 The project is ready. Next step is to test the functions.
 
-To get current election results for our 6 options (indexes are starting from 0):
+To get current election results:
 
 ```
-truffle exec getTotalVotes.js --network development
+truffle exec getTotalVotes.js
 ```
 
-If you do not specify a network, the default is `development`. You can see the results from voters' eye by setting network option as `voterA`, `voterB`, `voterC`, `voterD` or `voterE`.
-
-To check if your voter has voted, run:
+To check if a voter has voted, run:
 
 ```
-truffle exec isVoted.js --network voterC
+truffle exec isVoted.js ACCOUNT_ADDRESS
 ```
 
 To get current network's account address:

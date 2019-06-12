@@ -68,19 +68,19 @@ contract TurkishElections {
     }
     
     // Definition of vote() function
-    function vote(uint _option) public onlyDefinedVoter{
+    function vote(address _address, uint _option) public onlyDefinedVoter{
         // Validate if user has not voted before
-        require(voters[msg.sender].isVoted == true, "Duplicate voting trial!");
+        require(voters[_address].isVoted == true, "Duplicate voting trial!");
 		
-		voters[msg.sender].isVoted = true;
+		voters[_address].isVoted = true;
         
         // Save user vote
-        votes[msg.sender] = _option;
+        votes[_address] = _option;
 		
         // Save total votes
         totals[_option] = totals[_option] + 1;
 		
-        emit voted(msg.sender);
+        emit voted(_address);
     }
     
     // Definition of getTotalVotes() function to show total results
@@ -99,9 +99,8 @@ contract TurkishElections {
     }
 	
     // Definition of isVoted() function to show if an account is used for voting before
-    function isVoted() view public returns (bool result){
-        address voter = msg.sender;
-        return (voters[voter].isVoted);
+    function isVoted(address _address) view public returns (bool result){
+        return (voters[_address].isVoted);
     }
 		
 	// Definition of validateVoter() function to return false if voter exists, true otherwise

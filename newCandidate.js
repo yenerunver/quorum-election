@@ -10,6 +10,7 @@ module.exports = function(done) {
 	Election.deployed().then(function(instance) {
 		return instance.newCandidate(process.argv[4], process.argv[5]);
 	}).then(function(result){
+		console.log("New candidate is created: " + process.argv[4] + "(" + process.argv[5] + ")");
 		console.log(result);
 		done();
 	}).catch(function(e) {
