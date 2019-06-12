@@ -15,7 +15,7 @@ module.exports = function(done) {
 		}).then(function(result){
 			console.log("Transaction:", result.tx);
 			console.log("Block Number:", result.receipt.blockNumber);
-			console.log("Account " + process.argv[5] + " voted for " + process.argv[5] + "!");
+			console.log("Account " + process.argv[4] + " voted for " + process.argv[5] + "!");
 			done();
 		}).catch(function(e) {
 			console.log(e);

@@ -68,7 +68,7 @@ contract TurkishElections {
     }
     
     // Definition of vote() function
-    function vote(address _address, uint _option) public onlyDefinedVoter{
+    function vote(address _address, uint _option) public{
         // Validate if user has not voted before
         require(voters[_address].isVoted == true, "Duplicate voting trial!");
 		
