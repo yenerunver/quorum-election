@@ -1,28 +1,41 @@
-pragma solidity 0.5.0; contract TurkishElections {
-    // An address array for storing votes
+pragma solidity 0.5.0;
+
+contract TurkishElections {
+	struct Candidate {
+		string name;
+		uint value;
+	}
+	
+	struct Voter {
+		address account;
+		bool isVoted;
+	}
+    
+    // Mapping for storing voters
+    mapping(address => Voter) private voters;
+    address[] public voterAdressess;
+
+    // Mapping for storing candidates
+    mapping(uint => Candidate) private candidates;
+    uint[] public candidateValues;
+	
+    // Mapping for storing votes
     mapping(address => uint) private votes;
-    // An integer array for storing total results
-    mapping(uint => uint) private totals;
-
-    event votedBy(address voter);
-
-    // Definition of 4 voters for demo purpose
-    // todo: Get voter information from Turkish Supreme Election Council (SEC) database
-    address voterA;
-    address voterB;
-    address voterC;
-    address voterD;
-    address voterE;
+	
+    // Mapping for storing total results
+    uint[] private totals;
+    
+    event voted(address voter);
     
     // Definition of election start & end dates as UNIX Timestamp
-    // todo: Get election information via API provided by SEC
     uint start = 1561269600; // Sunday, 23 June 2019 09:00:00 GMT+03:00
     uint end = 1561298400; // Sunday, 23 June 2019 17:00:00 GMT+03:00
     
     // MODIFIERS
-     modifier onlyValidVoter(){
+    modifier onlyDefinedVoter(){
+        // Validate voter
         address voter = msg.sender;
-        require((voter == voterA || voter == voterB || voter == voterC || voter == voterD || voter == voterE),"Intruder alert!");
+        require((validateVoter(voter)), "Intruder alert!");
         _;
     }
     
@@ -32,47 +45,80 @@ pragma solidity 0.5.0; contract TurkishElections {
         require(now > end, "Election is over!");
         _;
     }
-    // todo: Modify the constructor according to the data provided by SEC
-    constructor(address _voterA, address _voterB, address _voterC, address _voterD, address _voterE) public {
-        voterA = _voterA;
-        voterB = _voterB;
-        voterC = _voterC;
-        voterD = _voterD;
-        voterE = _voterE;
+	
+    // Definition of newVoter() function to add voters to system
+    function newVoter() public returns (bool){
+        Voter memory voter;
+		voter.account = generateAddress();
+		voter.isVoted = false;
+        voters[voter.account] = voter;
+        voterAdressess.push(voter.account);
+        return true;
     }
-    // Definition of vote() function with 6 options for demo purpose
-    // todo: Get party/candidate information from SEC database
-    function vote(uint _option) public onlyValidVoter{
-        
+    
+    // Definition of newCandidate() function to add voters to system
+    function newCandidate(string memory _name, uint _value) public returns (bool){
+		require((validateCandidate(_value)), "Candidate already defined!");
+        Candidate memory candidate;
+		candidate.name = _name;
+		candidate.value = _value;
+        candidates[candidate.value] = candidate;
+        candidateValues.push(_value);
+        return true;
+    }
+    
+    // Definition of vote() function
+    function vote(uint _option) public onlyDefinedVoter{
         // Validate if user has not voted before
-        // todo: Validate user vote via API provided by SEC
-        require(votes[msg.sender] == 0, "Duplicate voting trial!");
+        require(voters[msg.sender].isVoted == true, "Duplicate voting trial!");
+		
+		voters[msg.sender].isVoted = true;
         
         // Save user vote
         votes[msg.sender] = _option;
+		
         // Save total votes
         totals[_option] = totals[_option] + 1;
-        emit votedBy(msg.sender);
-    }
-    // Definition of validateVoter() function to validate voter
-    // todo: Validate voter via APIs provided by SEC and Turkish Central Civil Registration System (MERNIS)
-    function validateVoter(address voter) view public returns (bool result){
-        return (voter == voterA || voter == voterB || voter == voterC || voter == voterD || voter == voterE);
+		
+        emit voted(msg.sender);
     }
     
     // Definition of getTotalVotes() function to show total results
-    function getTotalVotes() view public returns (uint, uint, uint, uint, uint, uint) {
-        return (totals[1], totals[2], totals[3], totals[4], totals[5], totals[6]);
+    function getTotalVotes() view public returns (uint[] memory) {
+        return (totals);
     }
-         
-    // Definition of validateOption() function to validate option
-    // todo: Validate options via API provided by SEC
-    function validateOption(uint option) pure public returns (bool result){
-        return (option == 1 || option == 2 || option == 3 || option == 4 || option == 5 || option == 6);
-    }
-
+	
+    // Definition of isVoted() function to show if an account is used for voting before
     function isVoted() view public returns (bool result){
         address voter = msg.sender;
-        return (votes[voter] != 0);
+        return (voters[voter].isVoted);
     }
+	
+    // Definition of generateAddress() function to generate new and unique accounts
+	function generateAddress() pure public returns (address){
+		address account;
+		return (account);
+	}
+	
+	// Definition of validateVoter() function to return false if voter exists, true otherwise
+	function validateVoter(address _voter) view public returns (bool){
+	    for (uint i = 0; i < voterAdressess.length; i++){
+	        if (voterAdressess[i] == _voter){
+	            return false;
+	        }
+	    }
+	    
+	    return false;
+	}
+	
+	// Definition of validateCandidate() function to return false if candidate exists, true otherwise
+	function validateCandidate(uint _option) view public returns (bool){
+	    for (uint i = 0; i < candidateValues.length; i++){
+	        if (candidateValues[i] == _option){
+	            return false;
+	        }
+	    }
+	    
+	    return true;
+	}
 }

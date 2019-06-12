@@ -1,0 +1,23 @@
+{
+  "name": "quorum-election",
+  "version": "1.0.0",
+  "description": "Sample election system for Turkey with private transactions using Quorum",
+  "main": "truffle-config.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yenerunver/quorum-election.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/yenerunver/quorum-election/issues"
+  },
+  "homepage": "https://github.com/yenerunver/quorum-election#readme",
+  "dependencies": {
+    "quorum-js": "^0.3.0",
+    "web3": "^1.0.0-beta.36"
+  }
+}
