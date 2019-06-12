@@ -18,7 +18,7 @@ module.exports = function(done) {
 			console.log("Account " + process.argv[5] + " voted for " + process.argv[5] + "!");
 			done();
 		}).catch(function(e) {
-			console.log("The account has no voting rights!");
+			console.log(e);
 			done();
 		});
 	}
