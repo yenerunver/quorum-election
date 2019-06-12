@@ -89,7 +89,7 @@ truffle exec getAddress.js --network voterE
 To vote for an option:
 
 ```
-truffle exec voteFor5.js --network voterB
+truffle exec voteFor.js 5 --network voterB
 ```
 
 Note that, after voters have submitted their votes, voters can only see their own votes. Only in `development` network, the total result can be seen.
