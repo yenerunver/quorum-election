@@ -32,10 +32,9 @@ contract TurkishElections {
     uint end = 1561298400; // Sunday, 23 June 2019 17:00:00 GMT+03:00
     
     // MODIFIERS
-    modifier onlyDefinedVoter(){
+    modifier onlyDefinedVoter(address _address){
         // Validate voter
-        address voter = msg.sender;
-        require((validateVoter(voter)), "Intruder alert!");
+        require((validateVoter(_address)), "Intruder alert!");
         _;
     }
     
@@ -68,7 +67,7 @@ contract TurkishElections {
     }
     
     // Definition of vote() function
-    function vote(address _address, uint _option) public{
+    function vote(address _address, uint _option) public onlyDefinedVoter(_address){
         // Validate if user has not voted before
         require(voters[_address].isVoted == true, "Duplicate voting trial!");
 		
