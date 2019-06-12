@@ -2,3 +2,4 @@ build/*
 node_modules/*
 addresses&keys.txt
 web3js.txt
+package-lock.json
