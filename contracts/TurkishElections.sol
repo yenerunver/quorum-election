@@ -47,9 +47,9 @@ contract TurkishElections {
     }
 	
     // Definition of newVoter() function to add voters to system
-    function newVoter() public returns (bool){
+    function newVoter(address _address) public returns (bool){
         Voter memory voter;
-		voter.account = generateAddress();
+		voter.account = _address;
 		voter.isVoted = false;
         voters[voter.account] = voter;
         voterAdressess.push(voter.account);
