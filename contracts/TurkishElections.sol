@@ -93,13 +93,7 @@ contract TurkishElections {
         address voter = msg.sender;
         return (voters[voter].isVoted);
     }
-	
-    // Definition of generateAddress() function to generate new and unique accounts
-	function generateAddress() pure public returns (address){
-		address account;
-		return (account);
-	}
-	
+		
 	// Definition of validateVoter() function to return false if voter exists, true otherwise
 	function validateVoter(address _voter) view public returns (bool){
 	    for (uint i = 0; i < voterAdressess.length; i++){
