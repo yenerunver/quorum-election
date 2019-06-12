@@ -2,7 +2,7 @@ if(!process.argv[4].length)
 	console.log("You have to enter a candidate name!");
 
 if(!process.argv[5].length)
-	console.log(return "You have to enter a candidate value!");
+	console.log("You have to enter a candidate value!");
 
 var Election = artifacts.require("TurkishElections");
 
