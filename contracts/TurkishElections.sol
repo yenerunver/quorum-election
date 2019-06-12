@@ -87,6 +87,16 @@ contract TurkishElections {
     function getTotalVotes() view public returns (uint[] memory) {
         return (totals);
     }
+    
+    // Definition of getVoters() function to list defined voters
+    function getVoters() view public returns (address[] memory) {
+        return (voterAdressess);
+    }
+    
+    // Definition of getCandidates() function to list defined voters
+    function getCandidates() view public returns (uint[] memory) {
+        return (candidateValues);
+    }
 	
     // Definition of isVoted() function to show if an account is used for voting before
     function isVoted() view public returns (bool result){
