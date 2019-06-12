@@ -59,6 +59,7 @@ git clone https://github.com/yenerunver/quorum-election
 Smart Contract and Truffle configuration files are already included in this project. Just need to migrate:
 
 ```
+cd quorum-election
 truffle migrate
 ```
 
