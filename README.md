@@ -66,6 +66,30 @@ truffle migrate
 
 The project is ready. Next step is to test the functions.
 
+To create a voter, run:
+
+```
+truffle exec newVoter.js
+```
+
+To create a candidate, run:
+
+```
+truffle exec newCandidate.js CANDIDATE_NAME CANDIDATE_VALUE
+```
+
+To get all voters:
+
+```
+truffle exec getVoters.js
+```
+
+To get all candidates:
+
+```
+truffle exec getCandidates.js
+```
+
 To get current election results:
 
 ```
@@ -78,16 +102,10 @@ To check if a voter has voted, run:
 truffle exec isVoted.js ACCOUNT_ADDRESS
 ```
 
-To get current network's account address:
-
-```
-truffle exec getAddress.js --network voterE
-```
-
 To vote for an option:
 
 ```
-truffle exec voteFor.js 5 --network voterB
+truffle exec voteFor.js ACCOUNT_ADDRESS CANDIDATE_VALUE
 ```
 
 Note that, after voters have submitted their votes, voters can only see their own votes. Only in `development` network, the total result can be seen.
