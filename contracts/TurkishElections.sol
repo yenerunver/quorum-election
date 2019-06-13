@@ -72,9 +72,9 @@ contract TurkishElections {
 		candidate.name = _name;
 		candidate.value = _value;
         candidates[candidate.value] = candidate;
-        candidateValues.push(_value);
-        totals[_value] = 0;
-        emit candidateCreated(_value);
+        candidateValues.push(candidate.value);
+        totals[candidate.value] = 0;
+        emit candidateCreated(candidate.value);
     }
     
     // Definition of vote() function
