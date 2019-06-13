@@ -110,10 +110,12 @@ contract TurkishElections {
 		
 	// Definition of validateVoter() function to return false if voter exists, true otherwise
 	function validateVoter(address _voter) view public returns (bool){
-	    for (uint i = 0; i < voterAdressess.length; i++){
-	        if (voterAdressess[i] == _voter){
-	            return false;
-	        }
+		if(voterAdressess.length){
+			for (uint i = 0; i < voterAdressess.length; i++){
+				if (voterAdressess[i] == _voter){
+					return false;
+				}
+			}
 	    }
 	    
 	    return false;
@@ -121,11 +123,13 @@ contract TurkishElections {
 	
 	// Definition of validateCandidate() function to return false if candidate exists, true otherwise
 	function validateCandidate(uint _option) view public returns (bool){
-	    for (uint i = 0; i < candidateValues.length; i++){
-	        if (candidateValues[i] == _option){
-	            return false;
-	        }
-	    }
+		if(candidateValues.length){
+			for (uint i = 0; i < candidateValues.length; i++){
+				if (candidateValues[i] == _option){
+					return false;
+				}
+			}
+		}
 	    
 	    return true;
 	}
