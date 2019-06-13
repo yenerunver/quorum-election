@@ -34,13 +34,13 @@ contract TurkishElections {
     // MODIFIERS
     modifier onlyDefinedVoter(address _address){
         // Validate voter
-        require((validateVoter(_address)), "Intruder alert!");
+        require(voters[_address].account != address(0), "Address already defined!");
         _;
     }
     
     modifier onlyValidCandidateValue(uint _value){
         // Validate voter
-        require((validateCandidate(_value)), "Candidate already defined!");
+        require(candidates[_value].name != ""), "Candidate already defined!");
         _;
     }
     
@@ -107,30 +107,4 @@ contract TurkishElections {
     function isVoted(address _address) view public returns (bool result){
         return (voters[_address].isVoted);
     }
-		
-	// Definition of validateVoter() function to return false if voter exists, true otherwise
-	function validateVoter(address _voter) view public returns (bool){
-		if(voterAdressess.length > 0){
-			for (uint i = 0; i < voterAdressess.length; i++){
-				if (voterAdressess[i] == _voter){
-					return false;
-				}
-			}
-	    }
-	    
-	    return false;
-	}
-	
-	// Definition of validateCandidate() function to return false if candidate exists, true otherwise
-	function validateCandidate(uint _option) view public returns (bool){
-		if(candidateValues.length > 0){
-			for (uint i = 0; i < candidateValues.length; i++){
-				if (candidateValues[i] == _option){
-					return false;
-				}
-			}
-		}
-	    
-	    return true;
-	}
 }
