@@ -63,7 +63,7 @@ contract TurkishElections {
     
     // Definition of newCandidate() function to add voters to system
     function newCandidate(string memory _name, uint _value) public returns (bool){
-        require((!validateCandidate(_value)), "Candidate already defined!");
+        require((validateCandidate(_value)), "Candidate already defined!");
         Candidate memory candidate;
 		candidate.name = _name;
 		candidate.value = _value;
@@ -76,7 +76,7 @@ contract TurkishElections {
     // Definition of vote() function
     function vote(address _address, uint _option) public{
         // Validate voter
-        require((!validateVoter(_address)), "Intruder alert!");
+        require((validateVoter(_address)), "Intruder alert!");
         
         // Validate if user has not voted before
         require(voters[_address].isVoted == true, "Duplicate voting trial!");
