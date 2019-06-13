@@ -38,13 +38,13 @@ contract TurkishElections {
     // MODIFIERS
     modifier onlyDefinedVoter(address _address){
         // Validate voter
-        require((voters[_address].account != address(0)), "Address already defined!");
+        require(validateVoter(_address), "Address already defined!");
         _;
     }
     
     modifier onlyValidCandidateValue(uint _value){
         // Validate voter
-        require(bytes(candidates[_value].name).length != 0, "Candidate already defined!");
+        require(validateCandidate(_value), "Candidate already defined!");
         _;
     }
     
@@ -67,7 +67,7 @@ contract TurkishElections {
     
     // Definition of newCandidate() function to add voters to system
     function newCandidate(string memory _name, uint _value) public returns (bool){
-        require((validateCandidate(_value)), "Candidate already defined!");
+        require(bytes(candidates[_value].name).length != 0, "Candidate already defined!");
         Candidate memory candidate;
 		candidate.name = _name;
 		candidate.value = _value;
@@ -80,7 +80,7 @@ contract TurkishElections {
     // Definition of vote() function
     function vote(address _address, uint _option) public{
         // Validate voter
-        require((validateVoter(_address)), "Intruder alert!");
+        require(voters[_address].account != address(0), "Intruder alert!");
         
         // Validate if user has not voted before
         require(voters[_address].isVoted == true, "Duplicate voting trial!");
