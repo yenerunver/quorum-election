@@ -30,30 +30,6 @@ contract TurkishElections {
     event voterCreated(address voter);
     
     event candidateCreated(uint value);
-    
-    // Definition of election start & end dates as UNIX Timestamp
-    uint start = 1561269600; // Sunday, 23 June 2019 09:00:00 GMT+03:00
-    uint end = 1561298400; // Sunday, 23 June 2019 17:00:00 GMT+03:00
-    
-    // MODIFIERS
-    modifier onlyDefinedVoter(address _address){
-        // Validate voter
-        require(validateVoter(_address), "Address already defined!");
-        _;
-    }
-    
-    modifier onlyValidCandidateValue(uint _value){
-        // Validate voter
-        require(validateCandidate(_value), "Candidate already defined!");
-        _;
-    }
-    
-    modifier onlyElectionTime(){
-        // Validate date and time
-        require(now < start, "Election is not started yet!");
-        require(now > end, "Election is over!");
-        _;
-    }
 	
     // Definition of newVoter() function to add voters to system
     function newVoter(address _address) public{
@@ -67,7 +43,6 @@ contract TurkishElections {
     
     // Definition of newCandidate() function to add voters to system
     function newCandidate(string memory _name, uint _value) public{
-        //require(bytes(candidates[_value].name).length != 0, "Candidate already defined!");
         Candidate memory candidate;
 		candidate.name = _name;
 		candidate.value = _value;
@@ -79,9 +54,6 @@ contract TurkishElections {
     
     // Definition of vote() function
     function vote(address _address, uint _option) public{
-        // Validate voter
-        //require(voters[_address].account != address(0), "Intruder alert!");
-        
         // Validate if user has not voted before
         require(voters[_address].isVoted == true, "Duplicate voting trial!");
 		
@@ -115,30 +87,4 @@ contract TurkishElections {
     function isVoted(address _address) view public returns (bool result){
         return (voters[_address].isVoted);
     }
-    
-    // Definition of validateVoter() function to return false if voter exists, true otherwise
-	function validateVoter(address _voter) view public returns (bool){
-		if(voterAdressess.length > 0){
-			for (uint i = 0; i < voterAdressess.length; i++){
-				if (voterAdressess[i] == _voter){
-					return false;
-				}
-			}
-	    }
-	    
-	    return true;
-	}
-	
-	// Definition of validateCandidate() function to return false if candidate exists, true otherwise
-	function validateCandidate(uint _option) view public returns (bool){
-		if(candidateValues.length > 0){
-			for (uint i = 0; i < candidateValues.length; i++){
-				if (candidateValues[i] == _option){
-					return false;
-				}
-			}
-	    }
-	    
-	    return true;
-	}
 }
