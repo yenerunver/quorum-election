@@ -38,6 +38,12 @@ contract TurkishElections {
         _;
     }
     
+    modifier onlyValidCandidateValue(uint _value){
+        // Validate voter
+        require((validateCandidate(_value)), "Candidate already defined!");
+        _;
+    }
+    
     modifier onlyElectionTime(){
         // Validate date and time
         require(now < start, "Election is not started yet!");
@@ -56,13 +62,13 @@ contract TurkishElections {
     }
     
     // Definition of newCandidate() function to add voters to system
-    function newCandidate(string memory _name, uint _value) public returns (bool){
-		require((validateCandidate(_value)), "Candidate already defined!");
+    function newCandidate(string memory _name, uint _value) public onlyValidCandidateValue(_value) returns (bool){
         Candidate memory candidate;
 		candidate.name = _name;
 		candidate.value = _value;
         candidates[candidate.value] = candidate;
         candidateValues.push(_value);
+        totals[_value] = 0;
         return true;
     }
     
