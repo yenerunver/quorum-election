@@ -27,6 +27,10 @@ contract TurkishElections {
     
     event voted(address voter);
     
+    event voterCreated(address voter);
+    
+    event candidateCreated(uint value);
+    
     // Definition of election start & end dates as UNIX Timestamp
     uint start = 1561269600; // Sunday, 23 June 2019 09:00:00 GMT+03:00
     uint end = 1561298400; // Sunday, 23 June 2019 17:00:00 GMT+03:00
@@ -58,22 +62,26 @@ contract TurkishElections {
 		voter.isVoted = false;
         voters[voter.account] = voter;
         voterAdressess.push(voter.account);
-        return true;
+        emit voterCreated(_address);
     }
     
     // Definition of newCandidate() function to add voters to system
     function newCandidate(string memory _name, uint _value) public returns (bool){
+        require((!validateCandidate(_value)), "Candidate already defined!");
         Candidate memory candidate;
 		candidate.name = _name;
 		candidate.value = _value;
         candidates[candidate.value] = candidate;
         candidateValues.push(_value);
         totals[_value] = 0;
-        return true;
+        emit candidateCreated(_value);
     }
     
     // Definition of vote() function
-    function vote(address _address, uint _option) public{       
+    function vote(address _address, uint _option) public{
+        // Validate voter
+        require((!validateVoter(_address)), "Intruder alert!");
+        
         // Validate if user has not voted before
         require(voters[_address].isVoted == true, "Duplicate voting trial!");
 		
