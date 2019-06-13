@@ -56,7 +56,7 @@ contract TurkishElections {
     }
 	
     // Definition of newVoter() function to add voters to system
-    function newVoter(address _address) public returns (bool){
+    function newVoter(address _address) public{
         Voter memory voter;
 		voter.account = _address;
 		voter.isVoted = false;
@@ -66,7 +66,7 @@ contract TurkishElections {
     }
     
     // Definition of newCandidate() function to add voters to system
-    function newCandidate(string memory _name, uint _value) public returns (bool){
+    function newCandidate(string memory _name, uint _value) public{
         require(bytes(candidates[_value].name).length != 0, "Candidate already defined!");
         Candidate memory candidate;
 		candidate.name = _name;
