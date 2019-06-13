@@ -30,6 +30,30 @@ contract TurkishElections {
     event voterCreated(address voter);
     
     event candidateCreated(uint value);
+    
+    // Definition of election start & end dates as UNIX Timestamp
+    uint start = 1560405600; // Thursday, 13 June 2019 09:00:00 GMT+03:00
+    uint end = 1560434400; // Thursday, 13 June 2019 17:00:00 GMT+03:00
+    
+    // MODIFIERS
+    modifier onlyDefinedVoter(address _address){
+        // Validate voter
+        require(validateVoter(_address), "Address already defined!");
+        _;
+    }
+    
+    modifier onlyValidCandidateValue(uint _value){
+        // Validate voter
+        require(validateCandidate(_value), "Candidate already defined!");
+        _;
+    }
+    
+    modifier onlyElectionTime(){
+        // Validate date and time
+        require(now < start, "Election is not started yet!");
+        require(now > end, "Election is over!");
+        _;
+    }
 	
     // Definition of newVoter() function to add voters to system
     function newVoter(address _address) public{
@@ -38,11 +62,11 @@ contract TurkishElections {
 		voter.isVoted = false;
         voters[voter.account] = voter;
         voterAdressess.push(voter.account);
-        emit voterCreated(_address);
+        emit voterCreated(voter.account);
     }
     
     // Definition of newCandidate() function to add voters to system
-    function newCandidate(string memory _name, uint _value) public{
+    function newCandidate(string memory _name, uint _value) public onlyValidCandidateValue(_value){
         Candidate memory candidate;
 		candidate.name = _name;
 		candidate.value = _value;
@@ -53,7 +77,7 @@ contract TurkishElections {
     }
     
     // Definition of vote() function
-    function vote(address _address, uint _option) public{
+    function vote(address _address, uint _option) public onlyDefinedVoter(_address) onlyElectionTime(){
         // Validate if user has not voted before
         require(voters[_address].isVoted == true, "Duplicate voting trial!");
 		
@@ -87,4 +111,14 @@ contract TurkishElections {
     function isVoted(address _address) view public returns (bool result){
         return (voters[_address].isVoted);
     }
+	
+	// Definition of validateVoter() function to return true if voter exists, false otherwise
+	function validateVoter(address _address) view public returns (bool){
+		return (voters[_address].account != address(0));
+	}
+
+	// Definition of validateCandidate() function to return true if candidate exists, false otherwise
+	function validateCandidate(uint _value) view public returns (bool){
+		return (bytes(candidates[_value].name).length != 0);
+	}
 }
