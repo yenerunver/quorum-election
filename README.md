@@ -48,6 +48,11 @@ Now create seven Quorum nodes to simulate a real Quorum deployment and start up 
 
 Our environment is ready. Next thing is to deploy our Truffle application.
 
+```
+exit
+cd ..
+```
+
 ## Truffle
 
 Open up a new terminal and run this code in your workspace:
