@@ -62,7 +62,8 @@ contract TurkishElections {
     }
     
     // Definition of newCandidate() function to add voters to system
-    function newCandidate(string memory _name, uint _value) public onlyValidCandidateValue(_value) returns (bool){
+    function newCandidate(string memory _name, uint _value) public returns (bool){
+        require((!validateCandidate(_value)), "Candidate already defined!");
         Candidate memory candidate;
 		candidate.name = _name;
 		candidate.value = _value;
@@ -73,7 +74,10 @@ contract TurkishElections {
     }
     
     // Definition of vote() function
-    function vote(address _address, uint _option) public onlyDefinedVoter(_address){
+    function vote(address _address, uint _option) public{
+        // Validate voter
+        require((!validateVoter(_address)), "Intruder alert!");
+        
         // Validate if user has not voted before
         require(voters[_address].isVoted == true, "Duplicate voting trial!");
 		
@@ -107,4 +111,30 @@ contract TurkishElections {
     function isVoted(address _address) view public returns (bool result){
         return (voters[_address].isVoted);
     }
+    
+    // Definition of validateVoter() function to return true if voter exists, false otherwise
+	function validateVoter(address _voter) view public returns (bool){
+		if(voterAdressess.length > 0){
+			for (uint i = 0; i < voterAdressess.length; i++){
+				if (voterAdressess[i] == _voter){
+					return true;
+				}
+			}
+	    }
+	    
+	    return false;
+	}
+	
+	// Definition of validateCandidate() function to return true if candidate exists, false otherwise
+	function validateCandidate(uint _option) view public returns (bool){
+		if(candidateValues.length > 0){
+			for (uint i = 0; i < candidateValues.length; i++){
+				if (candidateValues[i] == _option){
+					return true;
+				}
+			}
+	    }
+	    
+	    return false;
+	}
 }
