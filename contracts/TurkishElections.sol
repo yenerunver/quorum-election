@@ -34,13 +34,13 @@ contract TurkishElections {
     // MODIFIERS
     modifier onlyDefinedVoter(address _address){
         // Validate voter
-        require(voters[_address].account != address(0), "Address already defined!");
+        require((voters[_address].account != address(0)), "Address already defined!");
         _;
     }
     
     modifier onlyValidCandidateValue(uint _value){
         // Validate voter
-        require(candidates[_value].name != ""), "Candidate already defined!");
+        require(bytes(candidates[_value].name).length != 0, "Candidate already defined!");
         _;
     }
     
