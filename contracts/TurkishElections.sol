@@ -22,8 +22,8 @@ contract TurkishElections {
     // Mapping for storing votes
     mapping(address => uint) private votes;
 	
-    // Mapping for storing total results
-    uint[] private totals;
+    // Array for storing total results
+    mapping(uint => uint) private totals;
     
     event voted(address voter);
     
@@ -79,7 +79,7 @@ contract TurkishElections {
     // Definition of vote() function
     function vote(address _address, uint _option) public onlyDefinedVoter(_address) onlyElectionTime(){
         // Validate if user has not voted before
-        require(voters[_address].isVoted == true, "Duplicate voting trial!");
+        require(voters[_address].isVoted == false, "Duplicate voting trial!");
 		
 		voters[_address].isVoted = true;
         
@@ -92,9 +92,9 @@ contract TurkishElections {
         emit voted(_address);
     }
     
-    // Definition of getTotalVotes() function to show total results
-    function getTotalVotes() view public returns (uint[] memory) {
-        return (totals);
+    // Definition of getTotalVotesFor() function to show total results for a single Candidate
+    function getTotalVotesFor(uint _value) view public returns (uint) {
+        return (totals[_value]);
     }
     
     // Definition of getVoters() function to list defined voters
@@ -119,6 +119,6 @@ contract TurkishElections {
 
 	// Definition of validateCandidate() function to return true if candidate exists, false otherwise
 	function validateCandidate(uint _value) view public returns (bool){
-		return (bytes(candidates[_value].name).length != 0);
+		return (bytes(candidates[_value].name).length == 0);
 	}
 }
