@@ -98,7 +98,7 @@ truffle exec getCandidates.js
 To get current election results:
 
 ```
-truffle exec getTotalVotes.js
+truffle exec getTotalVotesFor.js CANDIDATE_VALUE
 ```
 
 To check if a voter has voted, run:
