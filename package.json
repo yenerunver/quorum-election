@@ -17,7 +17,7 @@
   },
   "homepage": "https://github.com/yenerunver/quorum-election#readme",
   "dependencies": {
-    "quorum-js": "^0.3.0",
+    "quorum-js": "^0.3.6",
     "web3": "^1.5.3"
   }
 }
